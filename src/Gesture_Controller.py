@@ -161,8 +161,9 @@ class HandRecog:
             
             try:
                 ratio = round(dist/dist2,1)
-            except:
-                ratio = round(dist1/0.01,1)
+            except Exception as e:
+                print("An error occurred:", e)
+                ratio = 0
 
             self.finger = self.finger << 1
             if ratio > 0.5 :
@@ -275,7 +276,7 @@ class Controller:
     pinchlv = 0
     framecount = 0
     prev_hand = None
-    pinch_threshold = 0.3
+    pinch_threshold = 1
     
     def getpinchylv(hand_result):
         """returns distance beween starting pinch y coord and current hand position y coord."""
@@ -595,6 +596,5 @@ class GestureController:
         GestureController.cap.release()
         cv2.destroyAllWindows()
 
-# uncomment to run directly
-# gc1 = GestureController()
-# gc1.start()
+gc1 = GestureController()
+gc1.start()
